@@ -114,8 +114,8 @@ const CreateTicket = () => {
                 <br/>
 
                 <div className="form-group">
-                  <label htmlFor="startingPoint">Availabale Trains</label>
-                  <select id="searchTrains" className="form-select" required>
+                  <label htmlFor="availableTrains">Availabale Trains</label>
+                  <select id="availableTrains" className="form-select" required>
                     <option value="" disabled selected>Select From Here </option>
                     <option>GHY123</option>
                     <option>IUI832</option>
@@ -169,8 +169,8 @@ const CreateTicket = () => {
               <input type="email" id="email1" className="form-control" placeholder='Email' required />
             </div>
             <div className="form-group" style={{width:'600px'}}>
-              <label htmlFor="berth">Aditional Members</label>
-              <select id="berth" className="form-select" required>
+              <label htmlFor="AdditionalMemebers">Aditional Members</label>
+              <select id="AdditionalMemebers" className="form-select" required>
                 <option value="select" disabled selected>Select Number Count</option>
                 <option value="0">0 Members</option>
                 <option value="1">1 Members</option>
