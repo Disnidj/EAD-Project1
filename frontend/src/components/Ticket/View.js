@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import image from '../../images/createTicket.jpeg'
 import { Link } from 'react-router-dom';
 
@@ -54,18 +54,25 @@ const TicketManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [ticketData, setTicketData] = useState([]);
 
+      // Function to fetch the list of trains
+      const fetchTickets = () => {
+        fetch('https://localhost:7261/api/Reservation')
+          .then((response) => response.json())
+          .then((data) => setTicketData(data))
+          .catch((error) => console.error('Error fetching tickets:', error));
+      };
+  
+      useEffect(() => {
+        fetchTickets();
+      }, []);
+
+
   // Event handler for search input
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-    // Function to fetch the list of trains
-    const fetchTickets = () => {
-      fetch('https://localhost:7261/api/Train')
-        .then((response) => response.json())
-        .then((data) => setTicketData(data))
-        .catch((error) => console.error('Error fetching tickets:', error));
-    };
+
 
   //Delete function
   const handleDeleteTicket = (ticketId) => {
@@ -74,7 +81,7 @@ const TicketManagement = () => {
   
     if (userConfirmed) {
       // User confirmed, proceed with deletion
-      fetch(`https://localhost:7261/api/Train/${ticketId}`, {
+      fetch(`https://localhost:7261/api/Reservation/${ticketId}`, {
         method: 'DELETE',
       })
         .then((response) => {
@@ -93,10 +100,6 @@ const TicketManagement = () => {
         });
     }
   };
-
-
-
-
 
 
   return (
@@ -130,11 +133,10 @@ const TicketManagement = () => {
         <thead className="thead-dark">
           <tr>
             <th>Reference ID</th>
-            <th>Train Name</th>
-            <th>Destination</th>
+            <th>Train Name</th>            
             <th>Departure Stand</th>
-            <th>Ticket Fare</th>
-            <th>Seat No</th>
+            <th>Destination</th>
+            <th>Berth</th>
             <th>Time</th>
             <th>Date</th>
             <th>Action</th>
@@ -143,18 +145,17 @@ const TicketManagement = () => {
         <tbody>
           {ticketData
             .filter((ticket) =>
-            ticket.trainName.toLowerCase().includes(searchTerm.toLowerCase())
+            ticket.AvailableTrains.toLowerCase().includes(searchTerm.toLowerCase())
             )
             .map((ticket, index) => (
               <tr key={index}>
-                <td>{ticket.refID}</td>
-                <td>{ticket.trainName}</td>
-                <td>{ticket.to}</td>
-                <td>{ticket.from}</td>
-                <td>{ticket.ticketFare}</td>
-                <td>{ticket.seatNo}</td>
-                <td>{ticket.time}</td>
-                <td>{ticket.date}</td>
+                <td>{ticket.id}</td>
+                <td>{ticket.AvailableTrains}</td>
+                <td>{ticket.StartingPoint}</td>
+                <td>{ticket.EndingPoint}</td>
+                <td>{ticket.DoB}</td>
+                <td>{ticket.Time}</td>
+                <td>{ticket.Date}</td>
                 <td> <Link to="/ticket-update"><button type="button" class="btn btn-warning"><i className="fas fa-edit"></i>&nbsp; Update</button></Link>
                 &nbsp; 
                 {/* <Link to="/#"><button type="button" class="btn btn-danger"><i className ="far fa-trash-alt"> </i>&nbsp; Delete</button></Link>*/}

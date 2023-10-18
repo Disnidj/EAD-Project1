@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import image from '../../images/createTicket.jpeg';
 
 import { useState, useEffect } from 'react';
@@ -11,7 +12,6 @@ import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
 import "./Ticket.css"; // Import the custom CSS file
-import { Link } from 'react-router-dom';
 
 const UpdateTicket = () => {
 
@@ -20,26 +20,58 @@ const UpdateTicket = () => {
  const [allowedDateRange, setAllowedDateRange] = useState({ start: null, end: null });
  const [errorMessage, setErrorMessage] = useState('');
 
+ //Data load to update 
+ const { id } = useParams(); // Get the ticket ID from the URL
+ const [ticketDate, setticketDate] = useState('');
+ const [ticketTime, setticketTime] = useState('');
+ const [ticketStartingPoint, setticketStartingPoint] = useState('');
+ const [ticketEndingPoint, setticketEndingPoint] = useState('');
+ const [ticketAvailableTrains, setticketAvailableTrains] = useState('');
+ const [ticketPassengerName, setticketPassengerName] = useState('');
+ const [ticketPassengerNIC, setticketPassengerNIC] = useState('');
+ const [ticketPassengerAge, setticketPassengerAge] = useState('');
+ const [ticketGender, setticketGender] = useState('');
+ const [ticketDoB, setticketDoB] = useState('');
+ const [ticketContactNo, setticketContactNo] = useState('');
+ const [ticketEmail, setticketEmail] = useState('');
+ const [ticketAdditionalMembers, setticketAdditionalMembers] = useState('');
+
+ const navigate = useNavigate(); // Import useNavigate from react-router-dom
+
+
+
+
  // Calculate the date range (30 days in the future)
  useEffect(() => {
    const today = new Date();
    const futureDate = addDays(today, 30);
    const pastDate = subDays(today, 1); // Optional: Set a past date as the lower limit
-  //  const [bookedDate, setBookedDate] = useState(new Date()); // Initialize with a default value or fetch it from your data source
-   setAllowedDateRange({ start: pastDate, end: futureDate });
+  setAllowedDateRange({ start: pastDate, end: futureDate });
+
+   // Fetch ticket data based on the ID when the component mounts
+   fetch(`https://localhost:7261/api/Reservation/${id}`)
+   .then((response) => response.json())
+   .then((data) => {
+    setticketDate(data.ticketDate);
+    setticketTime(data.ticketDate);
+    setticketStartingPoint(data.ticketStartingPoint);
+    setticketEndingPoint(data.ticketEndingPoint);
+    setticketAvailableTrains(data.ticketAvailableTrains);
+    setticketPassengerName(data.ticketPassengerName);
+    setticketPassengerNIC(data.ticketPassengerNIC);
+    setticketPassengerAge(data.ticketPassengerAge);
+    setticketGender(data.ticketGender);
+    setticketDoB(data.ticketDoB);
+    setticketContactNo(data.ticketContactNo);
+    setticketEmail(data.ticketEmail);
+    setticketAdditionalMembers(data.ticketAdditionalMembers);
 
 
-   // Fetch the booked date from your API
-  //  fetchBookedDateFromAPI()
-  //  .then((data) => {
-  //    setBookedDate(data.bookedDate);
-  //  })
-  //  .catch((error) => {
-  //    console.error('Error fetching booked date: ', error);
-  //  });
+   })
+   .catch((error) => console.error('Error fetching train data:', error));
+}, [id]); // Add id to the dependency array to trigger the effect when it changes
 
 
- }, []);
 
  // Validate the selected date
 //  const handleDateChange = (date) => {
@@ -59,13 +91,27 @@ const UpdateTicket = () => {
   setSelectedDate(date);
   if (!isWithinInterval(new Date(date), allowedDateRange)) {
     setErrorMessage('Please select a date within the next 30 days.');
+    setticketDate(e.target.value);
   } else {
     setErrorMessage('');
   }
 };
 
 
+// //handle the input data
+// const handleDateChange = (e) => {
+ 
+// };
 
+const handleTrainStateChange = (e) => {
+  setTrainState(e.target.value);
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  
+
+}
 
 
   return (

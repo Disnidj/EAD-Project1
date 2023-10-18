@@ -57,7 +57,7 @@ export default function AppRouter() {
 
           <Route path="/ticket-management" element={<TicketManagement />} />
           <Route path="/ticket-create" element={<CreateTicket />} />
-          <Route path="/ticket-update" element={<UpdateTicket />} />
+          <Route path="/ticket-update/:id" element={<UpdateTicket />} />
           <Route path="/ticket-passenger1" element={<PassengerDetails />} />
           <Route path="/ticket-passenger-update" element={<UpdatePassengerDetails />} />
 
