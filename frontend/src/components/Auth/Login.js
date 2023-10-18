@@ -3,53 +3,66 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css'; // Import the custom CSS file
+import axios from 'axios'; 
 
-// Define the LoginPage component
 const LoginPage = () => {
-  // Initialize state for username and password
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Import useNavigate from react-router-dom
 
-  // Get the navigation function from react-router-dom
-  const navigate = useNavigate();
-
-  // Handle changes in the username input
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
-  // Handle changes in the password input
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  // Handle the login action
-  const handleLogin = () => {
-    // For simplicity, log the entered username and password
-    console.log('Username:', username);
-    console.log('Password:', password);
-    // Add your authentication logic here (e.g., call an API, validate against a database)
-
-    // If authentication is successful, navigate to the Home page
-    navigate('/home');
+  const handleLogin = async() => {
+    try {
+      // Make a POST request to your login endpoint in the backend
+      const response = await axios.post('https://localhost:7261/api/auth/login', {
+        email,
+        password,
+      });
+      // Check the response for authentication success
+      if (response.data && response.data.isAuthenticated) {
+        alert('Authentication succeeded');
+        // If authentication is successful, navigate to the Home page
+        navigate('/home');
+      } else {
+        // Handle authentication failure (e.g., show an error message)
+        console.log('Authentication failed');
+        alert("Authentication failed");
+        console.log(email);
+        console.log(password);
+      }
+    } catch (error) {
+      // Handle any errors (e.g., network issues, server errors)
+      console.error('Error during authentication:', error);
+      alert("Error during authentication");
+    }
   };
 
-  // Handle the registration action
   const handleRegister = () => {
-    // If registration is successful, navigate to the Registration page
+    // If authentication is successful, navigate to the Home page
     navigate('/Register');
   };
 
   return (
-    // Render the login page
+   
     <div className="login-background">
       <div className="row justify-content-center">
         <div className="col-md-6">
+      
           <div className="card1">
+          
             <div className="card-header1">
+            
               <h3>Login</h3>
             </div>
             <div className="card-body1">
+            
               <form>
                 {/* Username Input */}
                 <br/>
@@ -61,7 +74,7 @@ const LoginPage = () => {
                     type="text"
                     className="form-control"
                     id="username"
-                    value={username}
+                    value={email}
                     onChange={handleUsernameChange}
                   />
                 </div>
@@ -77,6 +90,8 @@ const LoginPage = () => {
                     value={password}
                     onChange={handlePasswordChange}
                   />
+
+                  
                 </div>
                 {/* Login Button */}
                 <button
@@ -84,7 +99,7 @@ const LoginPage = () => {
                   className="btn btn-primary"
                   onClick={handleLogin}
                 >
-                  Login
+                  Login  
                 </button>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,5 +121,4 @@ const LoginPage = () => {
   );
 };
 
-// Export the LoginPage component
 export default LoginPage;
