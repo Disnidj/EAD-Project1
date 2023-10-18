@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
+
 import './TrainSchedule.css';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -71,10 +71,7 @@ const CreateTrainSchedule = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  useEffect(() => {
-    // Initialize datepicker when the component mounts
-    $('.datepicker').datepicker();
-  }, []);
+
 
   return (
     <div className="container-fluid">
@@ -91,14 +88,13 @@ const CreateTrainSchedule = () => {
                     Date
                   </label>
                   <input
-                    type="date"
-                    className="form-control datepicker"
+                    type="date" // Use type="date" for date selection
                     id="date"
-                    name="date"
-                    placeholder="Enter the date"
+                    className="form-control datepicker"
                     required
                     value={formData.date}
                     onChange={handleInputChange}
+                    
                   />
                 </div>
 
@@ -289,7 +285,7 @@ const CreateTrainSchedule = () => {
             </div>
           </form>
         </div>
-        <br/> <br/> <br/> <br/>
+        <br/> <br/> <br/> <br/><br/> <br/>
       </div>
     </div>
   );

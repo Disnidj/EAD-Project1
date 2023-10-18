@@ -112,18 +112,79 @@ const CreateTicket = () => {
                   </select>
                 </div>
                 <br/>
-                <div className="mb-3">
-                  <label htmlFor="search" className="visually-hidden">Search</label>
-                  <input type="text" id="search" className="form-control" placeholder="Search Trains" />
-                </div>
+
                 <div className="form-group">
-                  <button type="button" className="btn btn-primary">Search Trains</button>
+                  <label htmlFor="startingPoint">Availabale Trains</label>
+                  <select id="searchTrains" className="form-select" required>
+                    <option value="" disabled selected>Select From Here </option>
+                    <option>GHY123</option>
+                    <option>IUI832</option>
+                  </select>
                 </div>
               </div>
+              <br/>
+
+              {/* passenger details */}
+
               
-              <Link to="/ticket-passenger1">
-                <button type="button" class="btn btn-secondary" style={{ width: '750px' }}>Add Passenger Details</button>
-              </Link>
+          <h3>Passenger Details</h3>
+          <br/>
+          <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="name">Name</label>
+              <input type="text" id="name" className="form-control" placeholder='Name' required />
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="nic">NIC</label>
+              <input type="text" id="nic" className="form-control" placeholder='NIC' required />
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="age">Age</label>
+              <input type="number" id="age" className="form-control" placeholder='Age' required />
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="gender">Gender</label>
+              <select id="gender" className="form-select" required>
+                <option value="select" disabled selected>Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="berth">Berth Choice</label>
+              <select id="berth" className="form-select" required>
+                <option value="select" disabled selected>Select Berth</option>
+                <option value="Lower berth">Lower berth</option>
+                <option value="Middle berth">Middle berth</option>
+                <option value="Upper berth">Upper berth</option>
+                <option value="Side Lower berth">Side Lower berth</option>
+                <option value="Side Lower berth">Side Lower berth</option>
+              </select>
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="contactNumber">Contact Number</label>
+              <input type="tel" id="contactNumber" className="form-control" placeholder='Contact Number' required />
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email1" className="form-control" placeholder='Email' required />
+            </div>
+            <div className="form-group" style={{width:'600px'}}>
+              <label htmlFor="berth">Aditional Members</label>
+              <select id="berth" className="form-select" required>
+                <option value="select" disabled selected>Select Number Count</option>
+                <option value="0">0 Members</option>
+                <option value="1">1 Members</option>
+                <option value="2">2 Members</option>
+                <option value="3">3 Members</option>
+                
+              </select>
+            </div>
+           
+            
+
+            <button type="submit" className="btn btn-primary" >
+            Submit
+            </button>
             </center>
           </div>
         </form>
