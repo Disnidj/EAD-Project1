@@ -1,19 +1,22 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 public class Shedule
 {
-    [Key]
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
 
     [Required]
     public DateTime Date { get; set; }
 
     [Required]
-    public TimeSpan StartTime { get; set; }
+    public string StartTime { get; set; } = string.Empty;
 
     [Required]
-    public TimeSpan EndTime { get; set; }
+    public string EndTime { get; set; } = string.Empty;
 
     [Required]
     public string StartingStation { get; set; } = string.Empty;
