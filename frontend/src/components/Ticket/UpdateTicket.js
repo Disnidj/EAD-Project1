@@ -53,7 +53,7 @@ const UpdateTicket = () => {
    .then((response) => response.json())
    .then((data) => {
     setticketDate(data.ticketDate);
-    setticketTime(data.ticketDate);
+    setticketTime(data.ticketTime);
     setticketStartingPoint(data.ticketStartingPoint);
     setticketEndingPoint(data.ticketEndingPoint);
     setticketAvailableTrains(data.ticketAvailableTrains);
@@ -71,6 +71,72 @@ const UpdateTicket = () => {
    .catch((error) => console.error('Error fetching train data:', error));
 }, [id]); // Add id to the dependency array to trigger the effect when it changes
 
+
+const handleTicketTimeChange = (value) => {
+  setticketTime(value);
+};
+
+const handleTicketStartingPointChange = (value) => {
+  setticketStartingPoint(value);
+};
+
+const handleTicketEndingPointChange = (value) => {
+  setticketEndingPoint(value);
+};
+
+const handleTicketAvailableTrainsChange = (value) => {
+  setticketAvailableTrains(value);
+};
+
+const handleTicketPassengerNameChange = (value) => {
+  setticketPassengerName(value);
+};
+
+const handleTicketPassengerNICChange = (value) => {
+  setticketPassengerNIC(value);
+};
+
+const handleTicketPassengerAgeChange = (value) => {
+  setticketPassengerAge(value);
+};
+
+const handleTicketGenderChange = (value) => {
+  setticketGender(value);
+};
+
+const handleTicketDoBChange = (value) => {
+  setticketDoB(value);
+};
+
+const handleTicketContactNoChange = (value) => {
+  setticketContactNo(value);
+};
+
+const handleTicketEmailChange = (value) => {
+  setticketEmail(value);
+};
+
+const handleTicketAdditionalMembersChange = (value) => {
+  setticketAdditionalMembers(value);
+};
+
+
+
+const updatedTicket ={
+  Date: Date,
+  Time: Time,
+  StartingPoint: StartingPoint,
+  EndingPoint:EndingPoint,
+  AvailableTrains:AvailableTrains,
+  PassengerName:PassengerName,
+  PassengerNIC:PassengerNIC,
+  PassengerAge:PassengerAge,
+  Gender:Gender,
+  DoB:DoB,
+  ContactNo:ContactNo,
+  Email:Email,
+  AdditionalMembers:AdditionalMembers
+};
 
 
  // Validate the selected date
@@ -103,15 +169,38 @@ const UpdateTicket = () => {
  
 // };
 
-const handleTrainStateChange = (e) => {
-  setTrainState(e.target.value);
-};
 
 const handleSubmit = (e) => {
   e.preventDefault();
   
 
 }
+
+fetch(`https://localhost:7261/api/Reservation/${id}`, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(updatedTicket)
+})
+.then((response) => {
+  if (response.ok) {
+    console.log('Ticket updated successfully');
+    alert('Ticket updated successfully');
+    navigate('/ticket-managemnet');
+    // You can add code to navigate to a success page or perform other actions after a successful update.
+  } else {
+    console.error('Error updating ticket:', response.status);
+    alert('Ticket update failed');
+    // You can handle errors here, e.g., display an error message to the user.
+  }
+})
+.catch((error) => {
+  console.error('Error updating ticket:', error);
+  alert('Ticket update failed');
+  // Handle other errors, e.g., network issues.
+});
+
 
 
   return (
@@ -128,7 +217,7 @@ const handleSubmit = (e) => {
         <h2 className='Ticket_topic' >Train Ticket Booking</h2>
         <br/>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <h3> Fill The Journey Details </h3>
           <div className="row" style={{ textAlign: 'left', color:'gray', fontSize:'20px' }}>
             <center>
@@ -154,15 +243,17 @@ const handleSubmit = (e) => {
 
 
 
-              <div className="col-md-7">
+<div className="col-md-7">
                 <div className="form-group">
                   <label htmlFor="time">Time</label>
-                  <input type="time" id="time" className="form-control" required />
+                  <input type="time" id="time" className="form-control"  value={ticketTime}
+                    onChange={handleTicketTimeChange} required />
                 </div>
             
                 <div className="form-group">
                   <label htmlFor="startingPoint">Starting Point</label>
-                  <select id="startingPoint" className="form-select" required>
+                  <select id="startingPoint" className="form-select" required  value={ticketStartingPoint}
+                    onChange={handleTicketStartingPointChange}>
                     <option value="" disabled selected>Select Starting Point</option>
                     <option>Gampaha</option>
                     <option>Colombo-Fort</option>
@@ -172,7 +263,8 @@ const handleSubmit = (e) => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="endingPoint">Ending Point</label>
-                  <select id="endingPoint" className="form-select" required>
+                  <select id="endingPoint" className="form-select" required value={ticketEndingPoint}
+                    onChange={handleTicketEndingPointChange}>
                     <option value="" disabled selected>Select Ending Point</option>
                     <option>Gampaha</option>
                     <option>Colombo-Fort</option>
@@ -182,9 +274,10 @@ const handleSubmit = (e) => {
                 </div>
                 <br/>
 
-                <div className="form-group">
+                <div className="form-group">handleTicketAvailableTrainsChange
                   <label htmlFor="availableTrains">Availabale Trains</label>
-                  <select id="availableTrains" className="form-select" required>
+                  <select id="availableTrains" className="form-select" required value={ticketAvailableTrains}
+                  onChange={handleTicketAvailableTrainsChange}>
                     <option value="" disabled selected>Select From Here </option>
                     <option>GHY123</option>
                     <option>IUI832</option>
@@ -200,19 +293,23 @@ const handleSubmit = (e) => {
           <br/>
           <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="name">Name</label>
-              <input type="text" id="name" className="form-control" placeholder='Name' required />
+              <input type="text" id="name" className="form-control" placeholder='Name' required value={ticketPassengerName}
+                    onChange={handleTicketPassengerNameChange} />
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="nic">NIC</label>
-              <input type="text" id="nic" className="form-control" placeholder='NIC' required />
+              <input type="text" id="nic" className="form-control" placeholder='NIC' required value={ticketPassengerNIC}
+                    onChange={handleTicketPassengerNICChange} />
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="age">Age</label>
-              <input type="number" id="age" className="form-control" placeholder='Age' required />
+              <input type="number" id="age" className="form-control" placeholder='Age' required  value={ticketPassengerAge}
+                    onChange={handleTicketPassengerAgeChange} />
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="gender">Gender</label>
-              <select id="gender" className="form-select" required>
+              <select id="gender" className="form-select" required value={ticketGender}
+                    onChange={handleTicketGenderChange}>
                 <option value="select" disabled selected>Select gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -220,7 +317,8 @@ const handleSubmit = (e) => {
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="berth">Berth Choice</label>
-              <select id="berth" className="form-select" required>
+              <select id="berth" className="form-select" required value={ticketDoB}
+                    onChange={handleTicketDoBChange}>
                 <option value="select" disabled selected>Select Berth</option>
                 <option value="Lower berth">Lower berth</option>
                 <option value="Middle berth">Middle berth</option>
@@ -231,15 +329,18 @@ const handleSubmit = (e) => {
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="contactNumber">Contact Number</label>
-              <input type="tel" id="contactNumber" className="form-control" placeholder='Contact Number' required />
+              <input type="tel" id="contactNumber" className="form-control" placeholder='Contact Number' required value={ticketContactNo}
+                    onChange={handleTicketContactNoChange} />
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="email">Email</label>
-              <input type="email" id="email1" className="form-control" placeholder='Email' required />
+              <input type="email" id="email1" className="form-control" placeholder='Email' required  value={ticketEmail}
+                    onChange={handleTicketEmailChange}  />
             </div>
             <div className="form-group" style={{width:'600px'}}>
               <label htmlFor="AdditionalMemebers">Aditional Members</label>
-              <select id="AdditionalMemebers" className="form-select" required>
+              <select id="AdditionalMemebers" className="form-select" required value={ticketAdditionalMembers}
+                    onChange={handleTicketAdditionalMembersChange}>
                 <option value="select" disabled selected>Select Number Count</option>
                 <option value="0">0 Members</option>
                 <option value="1">1 Members</option>
